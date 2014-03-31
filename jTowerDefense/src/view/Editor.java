@@ -36,6 +36,8 @@ public class Editor extends BasicGame
 		new Mouse();
 		map=new Map(gc.getHeight()/Tile.HEIGHT, gc.getWidth()/Tile.WIDTH, TextureManager.grass);
 		gc.setMouseCursor(new Image(Tile.WIDTH, Tile.HEIGHT, Image.FILTER_NEAREST), 0, 0); // transparent mouse
+		gc.setTargetFrameRate(60);
+		SpriteManager.frame.setAlpha(0.75f);
 	}
 
 	@Override
@@ -47,6 +49,7 @@ public class Editor extends BasicGame
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		map.draw(g);
+		g.drawImage(SpriteManager.frame, 0,0);
 		Mouse.draw(g);
 	}
 	

@@ -29,11 +29,15 @@ public class Mouse {
 		tool=Tool.values()[newTool];
 	}
 	
+	public static Tool getTool() {
+		return tool;
+	}
+	
 	public static void update(Map map) {
 		Tile t=map.getTileAt(Mouse.x,Mouse.y);
-		cursorX=t.getX();
-		cursorY=t.getY();
 		if(t!=null) {
+			cursorX=t.getX();
+			cursorY=t.getY();
 			switch(tool) {
 				case SELECT: {
 					break;
@@ -67,14 +71,14 @@ public class Mouse {
 	}
 	
 	public static void draw(Graphics g) {
+		g.setColor(Color.white);
+		g.drawString("Tool: "+tool.name(), 10, 10);
 		switch(tool) {
 			case SELECT: g.drawImage(image, x, y); break;
 			case EDIT: g.setColor(Color.white); g.drawRect(cursorX, cursorY, width, height); break;
 			case START: g.setColor(Color.green); g.drawRect(cursorX, cursorY, width, height); break;
 			case END: g.setColor(Color.red); g.drawRect(cursorX, cursorY, width, height); break;
 		}
-		g.setColor(Color.white);
-		g.drawString("Tool: "+tool.name(), 10, 10);
 	}
 
 
