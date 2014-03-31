@@ -19,7 +19,7 @@ public class Game extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		iman=new InputManager(gc);
+		iman=new InputManager();
 		gc.getInput().addListener(iman);
 	}
 

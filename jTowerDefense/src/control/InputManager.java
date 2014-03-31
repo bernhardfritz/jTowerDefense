@@ -2,18 +2,10 @@ package control;
 
 import model.Mouse;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 
 public class InputManager implements InputListener{
-	
-	private GameContainer gc;
-	private Mouse mouse;
-	public InputManager(GameContainer gc) {
-		this.gc=gc;
-		mouse=new Mouse();
-	}
 	
 	@Override
 	public void mouseClicked(int button, int x, int y, int clickCount) {
@@ -22,30 +14,32 @@ public class InputManager implements InputListener{
 	@Override
 	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
 		//System.out.printf("Mouse dragged from (%d,%d) to (%d,%d)\n",oldx,oldy,newx,newy);
-		mouse.x=newx;
-		mouse.y=newy;
+		Mouse.x=newx;
+		Mouse.y=newy;
 	}
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		//System.out.printf("Mouse moved from (%d,%d) to (%d,%d)\n",oldx,oldy,newx,newy);
+		Mouse.x=newx;
+		Mouse.y=newy;
 	}
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		//System.out.printf("Mousebutton %d pressed at (%d,%d)\n",button,x,y);
-		mouse.button=button;
-		mouse.x=x;
-		mouse.y=y;
+		Mouse.button=button;
+		Mouse.x=x;
+		Mouse.y=y;
 	}
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		//System.out.printf("Mousebutton %d released at (%d,%d)\n",button,x,y);
-		mouse.button=-1;
-		mouse.x=x;
-		mouse.y=y;
+		Mouse.button=-1;
+		Mouse.x=x;
+		Mouse.y=y;
 	}
 	@Override
 	public void mouseWheelMoved(int change) {
-		//System.out.printf("Mousewheel moved %d step(s)\n",change);
+		if(change/Math.abs(change)==-1) Mouse.previousTool();
+		else Mouse.nextTool();		
 	}
 	@Override
 	public void inputEnded() {

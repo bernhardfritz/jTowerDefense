@@ -10,10 +10,12 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import control.InputManager;
 import control.SpriteManager;
+import control.TextureManager;
 
 public class Editor extends BasicGame
 {
@@ -27,29 +29,25 @@ public class Editor extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		iman=new InputManager(gc);
+		iman=new InputManager();
 		gc.getInput().addListener(iman);
 		new SpriteManager(); // loads all static images
-		map=new Map(gc.getHeight()/Tile.HEIGHT, gc.getWidth()/Tile.WIDTH, SpriteManager.grass);
+		new TextureManager(); // loads all static textures
+		new Mouse();
+		map=new Map(gc.getHeight()/Tile.HEIGHT, gc.getWidth()/Tile.WIDTH, TextureManager.grass);
+		gc.setMouseCursor(new Image(Tile.WIDTH, Tile.HEIGHT, Image.FILTER_NEAREST), 0, 0); // transparent mouse
 	}
 
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException {
-		if(Mouse.button==0) {
-			map.getTileAt(Mouse.x,Mouse.y).setTexture(SpriteManager.dirt);
-		} else if(Mouse.button==1) {
-			map.getTileAt(Mouse.x,Mouse.y).setTexture(SpriteManager.grass);
-		}
+		Mouse.update(map);
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		for(int row=0; row<map.getRows(); row++) {
-			for(int column=0; column<map.getColumns(); column++) {
-				map.getTiles()[row][column].draw(g);
-			}
-		}
+		map.draw(g);
+		Mouse.draw(g);
 	}
 	
 	public static void main(String[] args)
