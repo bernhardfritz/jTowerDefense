@@ -9,10 +9,14 @@ public class Path {
 	private Stack<Tile> path=new Stack<Tile>();
 	private Tile start;
 	private Tile end;
+	private int rows;
+	private int columns;
 	
 	public void init(Map map) {
-		for(int row=0; row<map.getRows(); row++) {
-			for(int column=0; column<map.getColumns(); column++) {
+		rows=map.getRows();
+		columns=map.getColumns();
+		for(int row=0; row<rows; row++) {
+			for(int column=0; column<columns; column++) {
 				map.getTiles()[row][column].initWalkableNeighbours();
 			}
 		}
@@ -22,7 +26,8 @@ public class Path {
 	
 	public boolean calculatePath() {
 		if(start!=null && end!=null) {
-			while(!path.isEmpty() && path.peek()!=end) {
+			int counter=0;
+			while(counter<rows*columns*4 && !path.isEmpty() && path.peek()!=end) {
 				if(path.peek().getWalkableNeighbours().isEmpty()) {
 					Tile tmp=path.pop();
 					if(!path.isEmpty()) path.peek().removeWalkableNeighbour(tmp);
@@ -32,6 +37,7 @@ public class Path {
 					path.peek().removeWalkableNeighbour(tmp);
 					
 				}
+				counter++;
 			}
 			if(path.isEmpty()) return false;
 			if(path.peek()==end) return true;
