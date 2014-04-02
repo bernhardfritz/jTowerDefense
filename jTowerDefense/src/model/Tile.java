@@ -1,6 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 
 public class Tile extends GameObject{
 	private int x;
@@ -8,19 +11,13 @@ public class Tile extends GameObject{
 	public static final int WIDTH=16;
 	public static final int HEIGHT=16;
 	private Texture texture;
-	private Tile left;
-	private Tile right;
-	private Tile top;
-	private Tile bottom;
+	private ArrayList<Tile> neighbours=new ArrayList<Tile>();
+	private ArrayList<Tile> walkableNeighbours=new ArrayList<Tile>();
 	
 	public Tile(int x, int y, Texture texture) {
 		this.x=x;
 		this.y=y;
 		this.texture=texture;
-		this.left=null;
-		this.right=null;
-		this.top=null;
-		this.bottom=null;
 	}
 	
 	public int getX() {
@@ -38,37 +35,46 @@ public class Tile extends GameObject{
 	public Texture getTexture() {
 		return texture;
 	}
-
-	public Tile getLeft() {
-		return left;
+	
+	public float getDistanceToTile(Tile t) {
+		return Math.abs(t.getX()-this.getX())+Math.abs(t.getY()-this.getY());
 	}
-
-	public void setLeft(Tile left) {
-		this.left = left;
+	
+	public Point getCenterPoint() {
+		return new Point(x+(float)Tile.WIDTH/2, y+(float)Tile.HEIGHT/2);
 	}
-
-	public Tile getRight() {
-		return right;
+	
+	public void addNeighbour(Tile t) {
+		if(!neighbours.contains(t)) neighbours.add(t);
 	}
-
-	public void setRight(Tile right) {
-		this.right = right;
+	
+	public ArrayList<Tile> getNeighbours() {
+		return neighbours;
 	}
-
-	public Tile getTop() {
-		return top;
+	
+	public void initWalkableNeighbours() {
+		walkableNeighbours.clear();
+		if(!neighbours.isEmpty()) {
+			for(Tile t:neighbours) {
+				if(t.isWalkable()) walkableNeighbours.add(t);
+			}
+		}
 	}
-
-	public void setTop(Tile top) {
-		this.top = top;
+	
+	public ArrayList<Tile> getWalkableNeighbours() {
+		return walkableNeighbours;
 	}
-
-	public Tile getBottom() {
-		return bottom;
+	
+	public void removeWalkableNeighbour(Tile t) {
+		walkableNeighbours.remove(t);
 	}
-
-	public void setBottom(Tile bottom) {
-		this.bottom = bottom;
+	
+	public boolean isWalkable() {
+		return texture.isWalkable();
+	}
+	
+	public boolean isBuildable() {
+		return texture.isBuildable();
 	}
 
 	@Override

@@ -40,7 +40,11 @@ public class Mouse {
 			cursorY=t.getY();
 			switch(tool) {
 				case SELECT: {
-					break;
+					if(Mouse.button==0) {
+						map.getPath().init(map);
+						System.out.println(map.getPath().calculatePath());
+						break;
+					}
 				}
 				case EDIT: {
 					if(Mouse.button==0) {
@@ -52,17 +56,17 @@ public class Mouse {
 				}
 				case START: {
 					if(Mouse.button==0) {
-						map.setStart(t);
-					} else if(Mouse.button==1 && t==map.getStart()) {
-						map.setStart(null);
+						map.getPath().setStart(t);
+					} else if(Mouse.button==1 && t==map.getPath().getStart()) {
+						map.getPath().setStart(null);
 					}
 					break;
 				}
 				case END: {
 					if(Mouse.button==0) {
-						map.setEnd(t);
-					} else if(Mouse.button==1 && t==map.getEnd()) {
-						map.setEnd(null);
+						map.getPath().setEnd(t);
+					} else if(Mouse.button==1 && t==map.getPath().getEnd()) {
+						map.getPath().setEnd(null);
 					}
 					break;
 				}

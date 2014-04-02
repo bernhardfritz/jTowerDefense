@@ -7,12 +7,12 @@ public class Map extends GameObject{
 	private Tile tiles[][];
 	private int rows;
 	private int columns;
-	private Tile start;
-	private Tile end;
+	private Path path;
 	
 	public Map(int rows, int columns, Texture texture) {
 		this.rows=rows;
 		this.columns=columns;
+		this.path=new Path();
 		tiles=new Tile[rows][columns];
 		initTiles(texture);
 	}
@@ -24,11 +24,12 @@ public class Map extends GameObject{
 			}
 		}
 		for(int row=0; row<rows; row++) {
-			for(int column=0; column<columns; column++) {
-				if(column>0) tiles[row][column].setLeft(tiles[row][column-1]);
-				if(column<columns-1) tiles[row][column].setRight(tiles[row][column+1]);
-				if(row>0) tiles[row][column].setTop(tiles[row-1][column]);
-				if(row<rows-1) tiles[row][column].setBottom(tiles[row+1][column]); 
+			for(int column=0; column<columns; column++) {				
+				tiles[row][column].getNeighbours().clear();
+				if(column>0) tiles[row][column].addNeighbour(tiles[row][column-1]);
+				if(column<columns-1) tiles[row][column].addNeighbour(tiles[row][column+1]);
+				if(row>0) tiles[row][column].addNeighbour(tiles[row-1][column]);
+				if(row<rows-1) tiles[row][column].addNeighbour(tiles[row+1][column]);
 			}
 		}
 	}
@@ -48,36 +49,20 @@ public class Map extends GameObject{
 		return null;
 	}
 	
+	public Path getPath() {
+		return path;
+	}
+
+	public void setPath(Path path) {
+		this.path = path;
+	}
+
 	public int getRows() {
 		return rows;
 	}
 	
 	public int getColumns() {
 		return columns;
-	}
-
-	public Tile getStart() {
-		return start;
-	}
-
-	public void setStart(Tile start) {
-		if(start==null) {
-			this.start=start;
-			return;
-		}
-		if(start.getTexture().isWalkable()) this.start=start;
-	}
-
-	public Tile getEnd() {
-		return end;
-	}
-
-	public void setEnd(Tile end) {
-		if(end==null) {
-			this.end=end;
-			return;
-		}
-		if(end.getTexture().isWalkable()) this.end=end;
 	}
 
 	@Override
@@ -87,13 +72,13 @@ public class Map extends GameObject{
 				tiles[row][column].draw(g);
 			}
 		}
-		if(start!=null) {
+		if(path.getStart()!=null) {
 			g.setColor(Color.green);
-			g.drawRect(start.getX(), start.getY(), Tile.WIDTH, Tile.HEIGHT);
+			g.drawRect(path.getStart().getX(), path.getStart().getY(), Tile.WIDTH, Tile.HEIGHT);
 		}
-		if(end!=null) {
+		if(path.getEnd()!=null) {
 			g.setColor(Color.red);
-			g.drawRect(end.getX(), end.getY(), Tile.WIDTH, Tile.HEIGHT);
+			g.drawRect(path.getEnd().getX(), path.getEnd().getY(), Tile.WIDTH, Tile.HEIGHT);
 		}
 	}
 }
