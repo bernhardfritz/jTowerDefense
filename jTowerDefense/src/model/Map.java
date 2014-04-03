@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -8,6 +10,7 @@ public class Map extends GameObject{
 	private int rows;
 	private int columns;
 	private Path path;
+	private ArrayList<Minion> minions=new ArrayList<Minion>();
 	
 	public Map(int rows, int columns, Texture texture) {
 		this.rows=rows;
@@ -53,8 +56,8 @@ public class Map extends GameObject{
 		return path;
 	}
 
-	public void setPath(Path path) {
-		this.path = path;
+	public void addMinion(Minion m) {
+		minions.add(m);
 	}
 
 	public int getRows() {
@@ -63,6 +66,16 @@ public class Map extends GameObject{
 	
 	public int getColumns() {
 		return columns;
+	}
+	
+	public void update() {
+		for(Minion m:minions) {
+			m.move();
+		}
+	}
+	
+	public void removeAllMinions() {
+		minions.clear();
 	}
 
 	@Override
@@ -81,5 +94,12 @@ public class Map extends GameObject{
 			g.setColor(Color.red);
 			g.drawRect(path.getEnd().getX(), path.getEnd().getY(), Tile.WIDTH, Tile.HEIGHT);
 		}
+		for(Minion m:minions) {
+			m.draw(g);
+		}
+	}
+
+	public ArrayList<Minion> getMinions() {
+		return minions;
 	}
 }

@@ -59,10 +59,12 @@ public class InputManager implements InputListener{
 	}
 	@Override
 	public void keyPressed(int key, char c) {
+		model.Keyboard.press(key);
 		//System.out.printf("Key %s pressed\n",c);
 	}
 	@Override
 	public void keyReleased(int key, char c) {
+		model.Keyboard.release(key);
 		//System.out.printf("qKey %s released\n",c);
 	}
 	@Override

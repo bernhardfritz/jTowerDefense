@@ -13,6 +13,7 @@ public class Path extends GameObject{
 	private int rows;
 	private int columns;
 	private boolean valid=false;
+	private Waypoint[] waypoints;
 	
 	public void init(Map map) {
 		rows=map.getRows();
@@ -25,9 +26,11 @@ public class Path extends GameObject{
 		path.clear();
 		path.push(start);
 		valid=calculatePath();
+		if(valid) calculateWaypoints();
+		else map.removeAllMinions();
 	}
 	
-	public boolean calculatePath() {
+	private boolean calculatePath() {
 		if(start!=null && end!=null) {
 			while(!path.isEmpty() && path.peek()!=end) {
 				if(path.peek().getWalkableNeighbours().isEmpty()) {
@@ -43,6 +46,28 @@ public class Path extends GameObject{
 			if(path.peek()==end) return true;
 		}
 		return false;
+	}
+	
+	private void calculateWaypoints() {
+		waypoints=new Waypoint[path.size()];
+		for(int i=0; i<waypoints.length; i++) {
+			waypoints[i]=new Waypoint(path.get(i));			
+		}
+		Waypoint w=waypoints[0];
+		w.prev=null;
+		w.next=waypoints[1];
+		w=w.next;
+		for(int i=1; i<waypoints.length-1; i++) {
+			w.prev=waypoints[i-1];
+			w.next=waypoints[i+1];
+			w=w.next;
+		}
+		w.prev=waypoints[waypoints.length-2];
+		w.next=null;
+	}
+	
+	public Waypoint[] getWaypoints() {
+		return waypoints;
 	}
 	
 	public Tile getClosestToEnd(ArrayList<Tile> walkableNeighbours) {

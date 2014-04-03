@@ -36,7 +36,7 @@ public class Tile extends GameObject{
 		return texture;
 	}
 	
-	public float getDistanceToTile(Tile t) {
+	public int getDistanceToTile(Tile t) {
 		return Math.abs(t.getX()-this.getX())+Math.abs(t.getY()-this.getY());
 	}
 	
