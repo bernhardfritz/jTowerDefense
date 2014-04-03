@@ -26,8 +26,7 @@ public class Path {
 	
 	public boolean calculatePath() {
 		if(start!=null && end!=null) {
-			int counter=0;
-			while(counter<rows*columns*4 && !path.isEmpty() && path.peek()!=end) {
+			while(!path.isEmpty() && path.peek()!=end) {
 				if(path.peek().getWalkableNeighbours().isEmpty()) {
 					Tile tmp=path.pop();
 					if(!path.isEmpty()) path.peek().removeWalkableNeighbour(tmp);
@@ -36,7 +35,6 @@ public class Path {
 					path.push(getClosestToEnd(tmp.getWalkableNeighbours()));
 					path.peek().removeWalkableNeighbours(path.toArray());
 				}
-				counter++;
 			}
 			if(path.isEmpty()) return false;
 			if(path.peek()==end) return true;
