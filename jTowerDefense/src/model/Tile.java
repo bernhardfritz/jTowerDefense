@@ -81,5 +81,12 @@ public class Tile extends GameObject{
 	public void drawStrategy(Graphics g) {
 		g.drawImage(texture.getImage(), x, y);
 	}
+
+	public void removeWalkableNeighbours(Object[] array) {
+		for(Object o:array) {
+			removeWalkableNeighbour((Tile)o);
+		}
+		
+	}
 	
 }

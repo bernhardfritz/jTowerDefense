@@ -34,8 +34,7 @@ public class Path {
 				} else {
 					Tile tmp=path.peek();
 					path.push(getClosestToEnd(tmp.getWalkableNeighbours()));
-					path.peek().removeWalkableNeighbour(tmp);
-					
+					path.peek().removeWalkableNeighbours(path.toArray());
 				}
 				counter++;
 			}
