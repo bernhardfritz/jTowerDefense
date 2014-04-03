@@ -72,6 +72,7 @@ public class Map extends GameObject{
 				tiles[row][column].draw(g);
 			}
 		}
+		path.draw(g);
 		if(path.getStart()!=null) {
 			g.setColor(Color.green);
 			g.drawRect(path.getStart().getX(), path.getStart().getY(), Tile.WIDTH, Tile.HEIGHT);

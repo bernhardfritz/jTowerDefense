@@ -40,18 +40,20 @@ public class Mouse {
 			cursorY=t.getY();
 			switch(tool) {
 				case SELECT: {
-					if(Mouse.button==0) {
-						map.getPath().init(map);
-						System.out.println(map.getPath().calculatePath());
-						break;
-					}
+					break;
 				}
 				case EDIT: {
 					if(Mouse.button==0) {
 						t.setTexture(TextureManager.dirt);
 					} else if(Mouse.button==1) {
+						if(t==map.getPath().getStart()) {
+							map.getPath().setStart(null);
+						} else if(t==map.getPath().getEnd()) {
+							map.getPath().setEnd(null);
+						}
 						t.setTexture(TextureManager.grass);
 					}
+					map.getPath().init(map);
 					break;
 				}
 				case START: {
@@ -60,6 +62,7 @@ public class Mouse {
 					} else if(Mouse.button==1 && t==map.getPath().getStart()) {
 						map.getPath().setStart(null);
 					}
+					map.getPath().init(map);
 					break;
 				}
 				case END: {
@@ -68,6 +71,7 @@ public class Mouse {
 					} else if(Mouse.button==1 && t==map.getPath().getEnd()) {
 						map.getPath().setEnd(null);
 					}
+					map.getPath().init(map);
 					break;
 				}
 			}

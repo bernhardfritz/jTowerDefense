@@ -1,16 +1,18 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Stack;
 
-public class Path {
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
+public class Path extends GameObject{
 	private Stack<Tile> path=new Stack<Tile>();
 	private Tile start;
 	private Tile end;
 	private int rows;
 	private int columns;
+	private boolean valid=false;
 	
 	public void init(Map map) {
 		rows=map.getRows();
@@ -22,6 +24,7 @@ public class Path {
 		}
 		path.clear();
 		path.push(start);
+		valid=calculatePath();
 	}
 	
 	public boolean calculatePath() {
@@ -55,11 +58,11 @@ public class Path {
 	}
 
 	public void setStart(Tile t) {
-		if(t==null) {
-			start=t;
-		} else if(t.getTexture().isWalkable()) {
-			start=t;
-		}
+		if(t!=null) {
+			if(t.isWalkable() && t!=end) {
+				start=t;
+			}
+		} else start=null;
 	}
 
 	public Tile getEnd() {
@@ -67,10 +70,25 @@ public class Path {
 	}
 
 	public void setEnd(Tile t) {
-		if(t==null) {
-			end=t;
-		} else if(t.getTexture().isWalkable()) {
-			end=t;
+		if(t!=null) {
+			if(t.isWalkable() && t!=start) {
+				end=t;
+			}
+		} else end=null;
+	}
+
+	public boolean isValid() {
+		return valid;
+	}
+
+	@Override
+	public void drawStrategy(Graphics g) {
+		if(this.isValid()) {
+			g.setColor(Color.blue);
+			for(Object o:path.toArray()) {
+				Tile tmp=(Tile)o;
+				g.drawRect(tmp.getX(), tmp.getY(), Tile.WIDTH, Tile.HEIGHT);
+			}
 		}
 	}
 }
