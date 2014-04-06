@@ -31,6 +31,18 @@ public class WaypointList {
 		System.out.println(w);
 	}
 	
+	public Waypoint search(Waypoint old) {
+		Waypoint tmp=tail;
+		while(old!=null) {
+			while(tmp!=null) {
+				if(old.getTile()==tmp.getTile()) return tmp;
+				tmp=tmp.prev;
+			}
+			old=old.prev;
+		}
+		return null;
+	}
+	
 	public void delete(Waypoint w) {
 		if(head!=null) {
 			if(w==head) {

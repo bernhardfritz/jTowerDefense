@@ -86,6 +86,14 @@ public class Minion extends GameObject{
 		}
 	}
 	
+	public void setWaypoint(Waypoint w) {
+		waypoint=w;
+	}
+	
+	public Waypoint getWaypoint() {
+		return waypoint;
+	}
+	
 	@Override
 	public void drawStrategy(Graphics g) {
 		if(alive) {
