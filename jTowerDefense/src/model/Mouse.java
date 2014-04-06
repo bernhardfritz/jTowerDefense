@@ -53,7 +53,7 @@ public class Mouse {
 						}
 						t.setTexture(TextureManager.grass);
 					}
-					map.getPath().init(map);
+					if(Mouse.button==0 || Mouse.button==1) map.getPath().init(map);
 					break;
 				}
 				case START: {
@@ -62,7 +62,7 @@ public class Mouse {
 					} else if(Mouse.button==1 && t==map.getPath().getStart()) {
 						map.getPath().setStart(null);
 					}
-					map.getPath().init(map);
+					if(Mouse.button==0 || Mouse.button==1) map.getPath().init(map);
 					break;
 				}
 				case END: {
@@ -71,7 +71,7 @@ public class Mouse {
 					} else if(Mouse.button==1 && t==map.getPath().getEnd()) {
 						map.getPath().setEnd(null);
 					}
-					map.getPath().init(map);
+					if(Mouse.button==0 || Mouse.button==1) map.getPath().init(map);
 					break;
 				}
 			}

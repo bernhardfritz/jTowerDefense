@@ -11,7 +11,7 @@ public class Keyboard {
 			if(map.getPath().isValid()) {
 				Minion m=new Minion(100,100,AnimationManager.greenMinion);
 				map.addMinion(m);
-				m.spawn(map.getPath().getWaypoints()[0]);
+				m.spawn(map.getPath().getWaypoints().getHead());
 			}
 		}
 	}
