@@ -81,11 +81,7 @@ public class Path extends GameObject{
 	}
 
 	public void setStart(Tile t) {
-		if(t!=null) {
-			if(t.isWalkable() && t!=end) {
-				start=t;
-			}
-		} else start=null;
+		start=t;
 	}
 
 	public Tile getEnd() {
@@ -93,11 +89,7 @@ public class Path extends GameObject{
 	}
 
 	public void setEnd(Tile t) {
-		if(t!=null) {
-			if(t.isWalkable() && t!=start) {
-				end=t;
-			}
-		} else end=null;
+		end=t;
 	}
 
 	public boolean isValid() {

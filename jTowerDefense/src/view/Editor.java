@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import model.Map;
 import model.Mouse;
 import model.Tile;
+import model.Toolbox;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -18,8 +19,9 @@ import control.InputManager;
 import control.SpriteManager;
 import control.TextureManager;
 
-public class Editor extends BasicGame
-{
+public class Editor extends BasicGame {
+	public static int WIDTH=640;
+	public static int HEIGHT=480;
 	InputManager iman;
 	SpriteManager sman;
 	AnimationManager aman;
@@ -39,13 +41,13 @@ public class Editor extends BasicGame
 		new Mouse();
 		new model.Keyboard();
 		map=new Map(gc.getHeight()/Tile.HEIGHT, gc.getWidth()/Tile.WIDTH, TextureManager.grass);
+		new Toolbox(map);
 		gc.setMouseCursor(new Image(Tile.WIDTH, Tile.HEIGHT, Image.FILTER_NEAREST), 0, 0); // transparent mouse
 		gc.setTargetFrameRate(60);
 	}
 
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException {
-		Mouse.update(map);
 		model.Keyboard.update(map);
 		map.update();
 	}
@@ -55,7 +57,7 @@ public class Editor extends BasicGame
 	{
 		map.draw(g);
 		g.drawImage(SpriteManager.frame, 0,0);
-		Mouse.draw(g);
+		Toolbox.draw(g);
 	}
 	
 	public static void main(String[] args)
@@ -64,7 +66,7 @@ public class Editor extends BasicGame
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new Editor("jTowerDefense Editor"));
-			appgc.setDisplayMode(640, 480, false);
+			appgc.setDisplayMode(Editor.WIDTH, Editor.HEIGHT, false);
 			appgc.setShowFPS(false);
 			appgc.start();
 		}

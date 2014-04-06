@@ -52,6 +52,17 @@ public class Map extends GameObject{
 		return null;
 	}
 	
+	public Tile getTileAtExactly(int x, int y) {
+		for(int row=0; row<rows; row++) {
+			for(int column=0; column<columns; column++) {
+				if(x==tiles[row][column].getX() && y==tiles[row][column].getY()) {
+					return tiles[row][column];
+				}
+			}
+		}
+		return null;
+	}
+	
 	public Path getPath() {
 		return path;
 	}

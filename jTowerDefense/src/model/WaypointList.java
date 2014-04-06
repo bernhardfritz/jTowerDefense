@@ -28,7 +28,6 @@ public class WaypointList {
 			w.prev=tail;
 			tail=w;
 		}
-		System.out.println(w);
 	}
 	
 	public Waypoint search(Waypoint old) {

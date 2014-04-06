@@ -1,6 +1,7 @@
 package control;
 
 import model.Mouse;
+import model.Toolbox;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
@@ -14,32 +15,29 @@ public class InputManager implements InputListener{
 	@Override
 	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
 		//System.out.printf("Mouse dragged from (%d,%d) to (%d,%d)\n",oldx,oldy,newx,newy);
-		Mouse.x=newx;
-		Mouse.y=newy;
+		Mouse.move(newx, newy);
+		Toolbox.update();
+		Toolbox.performAction();
 	}
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		Mouse.x=newx;
-		Mouse.y=newy;
+		Mouse.move(newx, newy);
+		Toolbox.update();
 	}
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		//System.out.printf("Mousebutton %d pressed at (%d,%d)\n",button,x,y);
-		Mouse.button=button;
-		Mouse.x=x;
-		Mouse.y=y;
+		if(Mouse.press(button)) Toolbox.performAction();
 	}
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		//System.out.printf("Mousebutton %d released at (%d,%d)\n",button,x,y);
-		Mouse.button=-1;
-		Mouse.x=x;
-		Mouse.y=y;
+		Mouse.release();
 	}
 	@Override
 	public void mouseWheelMoved(int change) {
-		if(change/Math.abs(change)==-1) Mouse.previousTool();
-		else Mouse.nextTool();		
+		if(change/Math.abs(change)==-1) Toolbox.next();
+		else Toolbox.prev();
 	}
 	@Override
 	public void inputEnded() {

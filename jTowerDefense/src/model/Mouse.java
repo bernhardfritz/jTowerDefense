@@ -1,93 +1,44 @@
 package model;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-
-import control.SpriteManager;
-import control.TextureManager;
-
 public class Mouse {
-	public static int button=-1; // -1 = not pressed; 0 = left; 1 = right 
-	public static int x=0;
-	public static int y=0;
-	private static int cursorX;
-	private static int cursorY;
-	private static int width=Tile.WIDTH;
-	private static int height=Tile.HEIGHT;
-	private static Tool tool=Tool.SELECT;
-	private static Image image=SpriteManager.sword;
+	private static int button=-1; // -1 = not pressed; 0 = left; 1 = right 
+	private static int x=0;
+	private static int y=0;
+	private static boolean pressed=false;
 	
-	public static void nextTool() {
-		int newTool=(tool.ordinal()+1)%Tool.values().length;
-		tool=Tool.values()[newTool];
+	public static boolean press(int button) {
+		boolean tmp=pressed;
+		pressed=true;
+		Mouse.button=button;
+		return tmp!=pressed;
 	}
 	
-	public static void previousTool() {
-		int newTool=(tool.ordinal()-1)%Tool.values().length;
-		if(newTool<0) newTool=Tool.values().length-1;
-		tool=Tool.values()[newTool];
+	public static boolean release() {
+		boolean tmp=pressed;
+		pressed=false;
+		Mouse.button=-1;
+		return tmp!=pressed;
 	}
 	
-	public static Tool getTool() {
-		return tool;
-	}
-	
-	public static void update(Map map) {
-		Tile t=map.getTileAt(Mouse.x,Mouse.y);
-		if(t!=null) {
-			cursorX=t.getX();
-			cursorY=t.getY();
-			switch(tool) {
-				case SELECT: {
-					break;
-				}
-				case EDIT: {
-					if(Mouse.button==0) {
-						t.setTexture(TextureManager.dirt);
-					} else if(Mouse.button==1) {
-						if(t==map.getPath().getStart()) {
-							map.getPath().setStart(null);
-						} else if(t==map.getPath().getEnd()) {
-							map.getPath().setEnd(null);
-						}
-						t.setTexture(TextureManager.grass);
-					}
-					if(Mouse.button==0 || Mouse.button==1) map.getPath().init(map);
-					break;
-				}
-				case START: {
-					if(Mouse.button==0) {
-						map.getPath().setStart(t);
-					} else if(Mouse.button==1 && t==map.getPath().getStart()) {
-						map.getPath().setStart(null);
-					}
-					if(Mouse.button==0 || Mouse.button==1) map.getPath().init(map);
-					break;
-				}
-				case END: {
-					if(Mouse.button==0) {
-						map.getPath().setEnd(t);
-					} else if(Mouse.button==1 && t==map.getPath().getEnd()) {
-						map.getPath().setEnd(null);
-					}
-					if(Mouse.button==0 || Mouse.button==1) map.getPath().init(map);
-					break;
-				}
-			}
-		}
-	}
-	
-	public static void draw(Graphics g) {
-		g.setColor(Color.white);
-		g.drawString("Tool: "+tool.name(), 10, 10);
-		switch(tool) {
-			case SELECT: g.drawImage(image, x, y); break;
-			case EDIT: g.setColor(Color.white); g.drawRect(cursorX, cursorY, width, height); break;
-			case START: g.setColor(Color.green); g.drawRect(cursorX, cursorY, width, height); break;
-			case END: g.setColor(Color.red); g.drawRect(cursorX, cursorY, width, height); break;
-		}
+	public static void move(int x, int y) {
+		Mouse.x=x;
+		Mouse.y=y;
 	}
 
+	public static int getButton() {
+		return button;
+	}
 
+	public static int getX() {
+		return x;
+	}
+
+	public static int getY() {
+		return y;
+	}
+
+	public static boolean isPressed() {
+		return pressed;
+	}	
+	
 }
