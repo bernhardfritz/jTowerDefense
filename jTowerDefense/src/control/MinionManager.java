@@ -23,7 +23,7 @@ public class MinionManager {
 	
 	public static void moveAllMinions() {
 		for(Minion m:minions) {
-			m.move();
+			if(m!=null) m.move();
 		}
 	}
 	
@@ -33,7 +33,7 @@ public class MinionManager {
 	
 	public static void draw(Graphics g) {
 		for(Minion m:minions) {
-			m.draw(g);
+			if(m!=null)	m.draw(g);
 		}
 	}
 }

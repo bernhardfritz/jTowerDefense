@@ -19,9 +19,9 @@ public abstract class Tool {
 		}
 	}
 	
-	public abstract void primaryAction(Map map);
+	public abstract void primaryAction();
 	
-	public abstract void secondaryAction(Map map);
+	public abstract void secondaryAction();
 	
 	public void draw(Graphics g) {
 		g.setColor(color);

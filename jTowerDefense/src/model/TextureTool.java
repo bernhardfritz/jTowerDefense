@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 
+import control.MapManager;
 import control.TextureManager;
 
 public class TextureTool extends Tool{
@@ -21,24 +22,24 @@ public class TextureTool extends Tool{
 	}
 	
 	@Override
-	public void primaryAction(Map map) {
-		Tile t=map.getTileAtExactly(x,y);
+	public void primaryAction() {
+		Tile t=MapManager.getMap().getTileAtExactly(x,y);
 		if(t==null) return;
 		if(size>=1) {
-			textureTileOnMap(t, map, primary);
+			textureTileOnMap(t, MapManager.getMap(), primary);
 		}
 		if(size>=2) {
-			textureTileOnMap(t, map, primary);
+			textureTileOnMap(t, MapManager.getMap(), primary);
 			ArrayList<Tile> tiles=new ArrayList<Tile>();
 			tiles.add(t.getRightNeighbour());
 			tiles.add(t.getBottomNeighbour());
 			tiles.add(t.getRightNeighbour().getBottomNeighbour());
 			for(Tile tmp:tiles) {
-				textureTileOnMap(tmp, map, primary);
+				textureTileOnMap(tmp, MapManager.getMap(), primary);
 			}
 		}
 		if(size>=3) {
-			textureTileOnMap(t, map, primary);
+			textureTileOnMap(t, MapManager.getMap(), primary);
 			ArrayList<Tile> tiles=new ArrayList<Tile>();
 			tiles.add(t.getRightNeighbour().getRightNeighbour());
 			tiles.add(t.getRightNeighbour().getRightNeighbour().getBottomNeighbour());
@@ -46,21 +47,21 @@ public class TextureTool extends Tool{
 			tiles.add(t.getBottomNeighbour().getBottomNeighbour());
 			tiles.add(t.getBottomNeighbour().getBottomNeighbour().getRightNeighbour());
 			for(Tile tmp:tiles) {
-				textureTileOnMap(tmp, map, primary);
+				textureTileOnMap(tmp, MapManager.getMap(), primary);
 			}
 		}
-		map.getPath().init(map);
+		MapManager.getMap().getPath().init();
 	}
 	
 	@Override
-	public void secondaryAction(Map map) {
-		Tile t=map.getTileAtExactly(x,y);
+	public void secondaryAction() {
+		Tile t=MapManager.getMap().getTileAtExactly(x,y);
 		if(!secondary.isWalkable()) {
-			if(t==map.getPath().getStart()) map.getPath().setStart(null);
-			else if(t==map.getPath().getEnd()) map.getPath().setEnd(null);
+			if(t==MapManager.getMap().getPath().getStart()) MapManager.getMap().getPath().setStart(null);
+			else if(t==MapManager.getMap().getPath().getEnd()) MapManager.getMap().getPath().setEnd(null);
 		}
 		t.setTexture(secondary);
-		map.getPath().init(map);
+		MapManager.getMap().getPath().init();
 	}
 	
 	public void setPrimaryTexture(Texture t) {

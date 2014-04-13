@@ -2,6 +2,8 @@ package model;
 
 import org.newdawn.slick.Color;
 
+import control.MapManager;
+
 public class SpawnpointTool extends Tool{
 
 	public SpawnpointTool() {
@@ -9,25 +11,25 @@ public class SpawnpointTool extends Tool{
 	}
 	
 	@Override
-	public void primaryAction(Map map) {
-		Tile t=map.getTileAtExactly(x, y);
+	public void primaryAction() {
+		Tile t=MapManager.getMap().getTileAtExactly(x, y);
 		if(t!=null) {
-			if(t.isWalkable() && t!=map.getPath().getEnd()) {
-				map.getPath().setStart(t);
+			if(t.isWalkable() && t!=MapManager.getMap().getPath().getEnd()) {
+				MapManager.getMap().getPath().setStart(t);
 			}
-		} else map.getPath().setStart(null);
-		map.getPath().init(map);
+		} else MapManager.getMap().getPath().setStart(null);
+		MapManager.getMap().getPath().init();
 	}
 
 	@Override
-	public void secondaryAction(Map map) {
-		Tile t=map.getTileAtExactly(x, y);
+	public void secondaryAction() {
+		Tile t=MapManager.getMap().getTileAtExactly(x, y);
 		if(t!=null) {
-			if(t.isWalkable() && t!=map.getPath().getStart()) {
-				map.getPath().setEnd(t);
+			if(t.isWalkable() && t!=MapManager.getMap().getPath().getStart()) {
+				MapManager.getMap().getPath().setEnd(t);
 			}
-		} else map.getPath().setEnd(null);
-		map.getPath().init(map);
+		} else MapManager.getMap().getPath().setEnd(null);
+		MapManager.getMap().getPath().init();
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Stack;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import control.MapManager;
 import control.MinionManager;
 
 public class Path extends GameObject{
@@ -17,12 +18,12 @@ public class Path extends GameObject{
 	private boolean valid=false;
 	private WaypointList waypoints;
 	
-	public void init(Map map) {
-		rows=map.getRows();
-		columns=map.getColumns();
+	public void init() {
+		rows=MapManager.getMap().getRows();
+		columns=MapManager.getMap().getColumns();
 		for(int row=0; row<rows; row++) {
 			for(int column=0; column<columns; column++) {
-				map.getTiles()[row][column].initWalkableNeighbours();
+				MapManager.getMap().getTiles()[row][column].initWalkableNeighbours();
 			}
 		}
 		path.clear();

@@ -12,6 +12,7 @@ public class SpriteManager {
 	public static Image greenMinionFront2;
 	public static Image greenMinionFront3;
 	public static Image projectile;
+	public static Image arrowTower;
 	
 	public SpriteManager() {
 		try {
@@ -19,6 +20,7 @@ public class SpriteManager {
 			initMisc();
 			initGreenMinion();
 			initProjectiles();
+			initTowers();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -42,5 +44,9 @@ public class SpriteManager {
 	
 	public void initProjectiles() throws SlickException {
 		projectile=new Image("res/projectiles/arrow2.png");
+	}
+	
+	public void initTowers() throws SlickException {
+		arrowTower=new Image("res/towers/arrowTower.png");
 	}
 }

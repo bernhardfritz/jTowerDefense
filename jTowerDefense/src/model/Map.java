@@ -1,12 +1,11 @@
 package model;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import control.MinionManager;
 import control.ProjectileManager;
+import control.TowerManager;
 
 public class Map extends GameObject{
 	private Tile tiles[][];
@@ -79,6 +78,7 @@ public class Map extends GameObject{
 	
 	public void update() {
 		MinionManager.moveAllMinions();
+		TowerManager.shootAllMinions();
 		ProjectileManager.moveAllProjectiles();
 	}
 
@@ -99,6 +99,7 @@ public class Map extends GameObject{
 			g.drawRect(path.getEnd().getX(), path.getEnd().getY(), Tile.WIDTH, Tile.HEIGHT);
 		}
 		MinionManager.draw(g);
+		TowerManager.draw(g);
 		ProjectileManager.draw(g);
 	}
 }

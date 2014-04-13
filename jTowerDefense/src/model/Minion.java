@@ -3,23 +3,25 @@ package model;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
+import control.MinionManager;
+
 public class Minion extends GameObject{
 
 	private int x;
 	private int y;
 	private int vx;
 	private int vy;
-	private int frameThreshold;
-	private int frameCounter;
 	private int health;
 	private int reward;
+	private float speed;
 	private boolean alive;
 	private Animation anim;
 	private Waypoint waypoint;
 	
-	public Minion(int health, int reward, Animation anim) {
+	public Minion(int health, int reward, float speed, Animation anim) {
 		this.health=health;
 		this.reward=reward;
+		this.speed=speed;
 		this.anim=anim;
 		hide();
 	}
@@ -28,8 +30,6 @@ public class Minion extends GameObject{
 		this.waypoint=waypoint;
 		this.x=waypoint.getX();
 		this.y=waypoint.getY();
-		this.frameThreshold=2;
-		this.frameCounter=0;
 		this.alive=true;
 		show();
 	}
@@ -65,7 +65,7 @@ public class Minion extends GameObject{
 	
 	public void move() {
 		if(alive) {
-			if(frameCounter==frameThreshold) {
+			if(speed!=0 && Counter.getCount()%(11-speed)==0) {
 				if(waypoint==null) {
 					this.despawn();
 					return;
@@ -80,9 +80,7 @@ public class Minion extends GameObject{
 					x+=vx;
 					y+=vy;
 				}
-				frameCounter=0;
 			}
-			frameCounter++;
 		}
 	}
 	

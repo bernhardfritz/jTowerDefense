@@ -4,6 +4,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import control.ProjectileManager;
+
 import view.Editor;
 
 public class Projectile extends GameObject{
@@ -19,15 +21,15 @@ public class Projectile extends GameObject{
 	private boolean alive;
 	private int damage;
 	
-	public Projectile(Image image, Point start, Point end, float speed, int damage) {
-		this.image=image.copy();
+	public Projectile(Point start, Point end, float speed, int damage, Image image) {
 		this.start=start;
 		x=start.getX();
 		y=start.getY();
 		this.end=end;
-		rotateProjectile();
 		this.speed=speed;
 		this.damage=damage;
+		this.image=image.copy();
+		rotateProjectile();
 		spawn();
 	}
 	
@@ -44,7 +46,6 @@ public class Projectile extends GameObject{
 		else if(vx<0&&vy>0) rotation=180+rotation;
 		else if(vx>0&&vy>0) rotation=360-rotation;
 		image.setRotation(360-rotation+45);
-		System.out.println(rotation);
 	}
 	
 	public void spawn() {
@@ -82,8 +83,7 @@ public class Projectile extends GameObject{
 			x+=vx*speed;
 			y+=vy*speed;
 			if(x<0 || x>Editor.WIDTH || y<0 || y>Editor.HEIGHT) {
-				alive=false;
-				hide();
+				despawn();
 			}
 		}
 	}
