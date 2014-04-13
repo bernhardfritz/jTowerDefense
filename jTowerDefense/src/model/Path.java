@@ -6,6 +6,8 @@ import java.util.Stack;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import control.MinionManager;
+
 public class Path extends GameObject{
 	private Stack<Tile> path=new Stack<Tile>();
 	private Tile start;
@@ -28,9 +30,9 @@ public class Path extends GameObject{
 		valid=calculatePath();
 		if(valid) {
 			calculateWaypoints();
-			notifyMinions(map.getMinions());
+			notifyMinions(MinionManager.getMinions());
 		}
-		else map.removeAllMinions();
+		else MinionManager.removeAllMinions();
 	}
 
 	private boolean calculatePath() {

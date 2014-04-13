@@ -76,6 +76,30 @@ public class Tile extends GameObject{
 	public boolean isBuildable() {
 		return texture.isBuildable();
 	}
+	
+	public Tile getLeftNeighbour() {
+		for(Tile t:neighbours)
+			if(t.getX()<getX()) return t;
+		return this;
+	}
+	
+	public Tile getRightNeighbour() {
+		for(Tile t:neighbours)
+			if(t.getX()>getX()) return t;
+		return this;
+	}
+	
+	public Tile getTopNeighbour() {
+		for(Tile t:neighbours)
+			if(t.getY()<getY()) return t;
+		return this;
+	}
+	
+	public Tile getBottomNeighbour() {
+		for(Tile t:neighbours)
+			if(t.getY()>getY()) return t;
+		return this;
+	}
 
 	@Override
 	public void drawStrategy(Graphics g) {

@@ -36,8 +36,8 @@ public class InputManager implements InputListener{
 	}
 	@Override
 	public void mouseWheelMoved(int change) {
-		if(change/Math.abs(change)==-1) Toolbox.next();
-		else Toolbox.prev();
+		Mouse.moveMouseWheel(change/Math.abs(change));
+		Toolbox.performAction();
 	}
 	@Override
 	public void inputEnded() {
@@ -58,6 +58,7 @@ public class InputManager implements InputListener{
 	@Override
 	public void keyPressed(int key, char c) {
 		model.Keyboard.press(key);
+		Toolbox.performAction();
 		//System.out.printf("Key %s pressed\n",c);
 	}
 	@Override

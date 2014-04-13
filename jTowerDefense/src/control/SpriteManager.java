@@ -11,12 +11,14 @@ public class SpriteManager {
 	public static Image greenMinionFront1;
 	public static Image greenMinionFront2;
 	public static Image greenMinionFront3;
+	public static Image projectile;
 	
 	public SpriteManager() {
 		try {
 			initTextures();
 			initMisc();
 			initGreenMinion();
+			initProjectiles();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -36,5 +38,9 @@ public class SpriteManager {
 		greenMinionFront1=new Image("res/minions/greenMinionFront1.png");
 		greenMinionFront2=new Image("res/minions/greenMinionFront2.png");
 		greenMinionFront3=new Image("res/minions/greenMinionFront3.png");
+	}
+	
+	public void initProjectiles() throws SlickException {
+		projectile=new Image("res/projectiles/arrow2.png");
 	}
 }

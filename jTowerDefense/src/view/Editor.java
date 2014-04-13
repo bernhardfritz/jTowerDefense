@@ -16,6 +16,7 @@ import org.newdawn.slick.SlickException;
 
 import control.AnimationManager;
 import control.InputManager;
+import control.MinionManager;
 import control.SpriteManager;
 import control.TextureManager;
 
@@ -38,6 +39,7 @@ public class Editor extends BasicGame {
 		new SpriteManager(); // loads all static images
 		new TextureManager(); // loads all static textures
 		new AnimationManager(); // loads all static animations
+		new MinionManager();
 		new Mouse();
 		new model.Keyboard();
 		map=new Map(gc.getHeight()/Tile.HEIGHT, gc.getWidth()/Tile.WIDTH, TextureManager.grass);
@@ -48,7 +50,6 @@ public class Editor extends BasicGame {
 
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException {
-		model.Keyboard.update(map);
 		map.update();
 	}
 
