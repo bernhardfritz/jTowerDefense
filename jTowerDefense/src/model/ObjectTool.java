@@ -25,6 +25,8 @@ public class ObjectTool extends Tool{
 
 	@Override
 	public void secondaryAction() { 
+		Tower t=TowerManager.getTowerAtExactly(x, y);
+		if(t!=null) TowerManager.removeTower(t);
 	}
 	
 	public void updatePosition() {
