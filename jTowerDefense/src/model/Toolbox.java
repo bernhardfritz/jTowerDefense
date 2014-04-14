@@ -41,13 +41,21 @@ public class Toolbox {
 			if(current instanceof TextureTool) {
 				((TextureTool) current).incrementSize();
 			}
+			else if (current instanceof ObjectTool) {
+//				((ObjectTool) current).changeObject();
+				((ObjectTool) current).mouseWheelUp();
+			}
 		} else if(delta==-1) {
 			if(current instanceof TextureTool) {
 				((TextureTool) current).decrementSize();
 			}
+			else if (current instanceof ObjectTool) {
+//				((ObjectTool) current).changeObject();
+				((ObjectTool) current).mouseWheelDown();
+			}
 		} else if(key==org.lwjgl.input.Keyboard.KEY_SPACE) {
 			if(MapManager.getMap().getPath().isValid()) {
-				Minion m=new Minion(100,100,10,AnimationManager.greenMinion);
+				Minion m=new Minion(100,100,10);
 				MinionManager.addMinion(m);
 				m.spawn(MapManager.getMap().getPath().getWaypoints().getHead());
 			}

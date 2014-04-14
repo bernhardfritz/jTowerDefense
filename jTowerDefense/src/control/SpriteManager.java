@@ -8,11 +8,21 @@ public class SpriteManager {
 	public static Image dirt;
 	public static Image grass;
 	public static Image frame;
+	public static Image greenMinionLeft1;
+	public static Image greenMinionLeft2;
+	public static Image greenMinionLeft3;
+	public static Image greenMinionRight1;
+	public static Image greenMinionRight2;
+	public static Image greenMinionRight3;
 	public static Image greenMinionFront1;
 	public static Image greenMinionFront2;
 	public static Image greenMinionFront3;
+	public static Image greenMinionBack1;
+	public static Image greenMinionBack2;
+	public static Image greenMinionBack3;
 	public static Image projectile;
 	public static Image arrowTower;
+	public static Image frostTower;
 	
 	public SpriteManager() {
 		try {
@@ -37,9 +47,18 @@ public class SpriteManager {
 	}
 	
 	public void initGreenMinion() throws SlickException {
-		greenMinionFront1=new Image("res/minions/greenMinionFront1.png");
-		greenMinionFront2=new Image("res/minions/greenMinionFront2.png");
-		greenMinionFront3=new Image("res/minions/greenMinionFront3.png");
+		greenMinionLeft1=new Image("res/minions/greenMinion/left1.png");
+		greenMinionLeft2=new Image("res/minions/greenMinion/left2.png");
+		greenMinionLeft3=new Image("res/minions/greenMinion/left3.png");
+		greenMinionRight1=new Image("res/minions/greenMinion/right1.png");
+		greenMinionRight2=new Image("res/minions/greenMinion/right2.png");
+		greenMinionRight3=new Image("res/minions/greenMinion/right3.png");
+		greenMinionFront1=new Image("res/minions/greenMinion/front1.png");
+		greenMinionFront2=new Image("res/minions/greenMinion/front2.png");
+		greenMinionFront3=new Image("res/minions/greenMinion/front3.png");
+		greenMinionBack1=new Image("res/minions/greenMinion/back1.png");
+		greenMinionBack2=new Image("res/minions/greenMinion/back2.png");
+		greenMinionBack3=new Image("res/minions/greenMinion/back3.png");
 	}
 	
 	public void initProjectiles() throws SlickException {
@@ -48,5 +67,6 @@ public class SpriteManager {
 	
 	public void initTowers() throws SlickException {
 		arrowTower=new Image("res/towers/arrowTower.png");
+		frostTower=new Image("res/towers/frostTower.png");
 	}
 }

@@ -27,6 +27,12 @@ public class ProjectileManager {
 		}
 	}
 	
+	public static void checkAllCollisions() {
+		for (Projectile p : projectiles) {
+			p.checkCollision();
+		}
+	}
+	
 	public static ArrayList<Projectile> getProjectiles() {
 		return projectiles;
 	}

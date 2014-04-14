@@ -80,6 +80,7 @@ public class Map extends GameObject{
 		MinionManager.moveAllMinions();
 		TowerManager.shootAllMinions();
 		ProjectileManager.moveAllProjectiles();
+		ProjectileManager.checkAllCollisions();
 	}
 
 	@Override

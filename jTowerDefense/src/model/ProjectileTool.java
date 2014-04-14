@@ -15,7 +15,7 @@ public class ProjectileTool extends Tool{
 	}
 	@Override
 	public void primaryAction() {
-		ProjectileManager.addProjectile(new Projectile(new Point(Editor.WIDTH/2, Editor.HEIGHT/2), new Point(x, y), 1, 100,SpriteManager.projectile));
+		ProjectileManager.addProjectile(new Projectile(new Point(Editor.WIDTH/2, Editor.HEIGHT/2), new Point(x, y), 2, 100,SpriteManager.projectile));
 	}
 
 	@Override

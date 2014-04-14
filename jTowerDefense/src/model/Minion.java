@@ -3,9 +3,10 @@ package model;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
-import control.MinionManager;
+import control.AnimationManager;
+import control.SpriteManager;
 
-public class Minion extends GameObject{
+public class Minion extends GameObject implements Cloneable{
 
 	private int x;
 	private int y;
@@ -15,14 +16,16 @@ public class Minion extends GameObject{
 	private int reward;
 	private float speed;
 	private boolean alive;
-	private Animation anim;
 	private Waypoint waypoint;
+	private float originSpeed;
+	private int slowDuration;
 	
-	public Minion(int health, int reward, float speed, Animation anim) {
+	public Minion(int health, int reward, float speed) {
 		this.health=health;
 		this.reward=reward;
 		this.speed=speed;
-		this.anim=anim;
+		this.slowDuration = 0;
+		this.originSpeed = speed;
 		hide();
 	}
 	
@@ -65,6 +68,13 @@ public class Minion extends GameObject{
 	
 	public void move() {
 		if(alive) {
+			if (slowDuration > 0) {
+				slowDuration--;
+			}
+			else {
+				this.speed = this.originSpeed;
+			}
+			
 			if(speed!=0 && Counter.getCount()%(11-speed)==0) {
 				if(waypoint==null) {
 					this.despawn();
@@ -84,6 +94,13 @@ public class Minion extends GameObject{
 		}
 	}
 	
+	public void slow(float slowFactor, int slowDuration) {
+		if (this.slowDuration <= 0) {
+			this.speed -= slowFactor;
+		}
+		this.slowDuration = slowDuration;
+	}
+	
 	public void setWaypoint(Waypoint w) {
 		waypoint=w;
 	}
@@ -92,10 +109,56 @@ public class Minion extends GameObject{
 		return waypoint;
 	}
 	
+	public void reduceHealth(int difference) {
+		this.health -= difference;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+	
+	private boolean isWalkingLeft() {
+		return vx<0;
+	}
+	
+	private boolean isWalkingRight() {
+		return vx>0;
+	}
+	
+	private boolean isWalkingUp() {
+		return vy<0;
+	}
+	
+	private boolean isWalkingDown() {
+		return vy>0;
+	}
+	
 	@Override
 	public void drawStrategy(Graphics g) {
-		if(alive) {
-			g.drawAnimation(anim, x,y);
+		if (health <= 0) {
+			despawn();
 		}
+		if(alive) {
+			if(isWalkingLeft()) {
+				g.drawAnimation(AnimationManager.greenMinionLeft, x,y);
+			} else if(isWalkingRight()) {
+				g.drawAnimation(AnimationManager.greenMinionRight, x,y);
+			} else if(isWalkingUp()) {
+				g.drawAnimation(AnimationManager.greenMinionBack, x,y);
+			} else if(isWalkingDown()) {
+				g.drawAnimation(AnimationManager.greenMinionFront, x,y);
+			}
+		}
+	}
+	
+	@Override
+	protected Object clone() {
+		try {
+			return super.clone();
+		}
+		catch (Exception e) {
+			
+		}
+		return null;
 	}
 }

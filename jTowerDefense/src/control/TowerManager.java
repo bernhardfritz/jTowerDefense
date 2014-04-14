@@ -6,7 +6,6 @@ import model.Minion;
 import model.Tower;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Point;
 
 public class TowerManager {
 	private static ArrayList<Tower> towers=new ArrayList<Tower>();
@@ -26,7 +25,7 @@ public class TowerManager {
 	public static void shootAllMinions() {
 		for(Tower t:towers) {
 			for(Minion m:MinionManager.getMinions()) {
-				if(m.isAlive() && t.shoot(new Point(m.getX(),m.getY()))) break;
+				if(m.isAlive() && t.shoot(m)) break;
 			}
 		}
 	}
